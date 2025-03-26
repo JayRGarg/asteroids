@@ -22,7 +22,7 @@ class Player(CircleShape):
         path = "./assets/rocket-blackbg.jpeg"
         img = pygame.image.load(path)
         img = pygame.transform.scale_by(img, 0.1)
-        #img.set_colorkey((255, 0, 0))
+        img.set_colorkey((0, 0, 0))
         img = pygame.transform.flip(img, False, True)
         img = pygame.transform.laplacian(img)
         img = pygame.transform.rotate(img, -self.rotation)

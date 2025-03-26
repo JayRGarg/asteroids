@@ -1,5 +1,6 @@
 import pygame
 from circleshape import CircleShape
+from explosion import Explosion
 from constants import *
 import random
 
@@ -9,7 +10,16 @@ class Asteroid(CircleShape):
         super().__init__(x, y, radius)
 
     def draw(self, screen):
-        pygame.draw.circle(screen, "white", self.position, self.radius, width=2)
+        #pygame.draw.circle(screen, "white", self.position, self.radius, width=2)
+        path = "./assets/asteroid-blackbg.jpeg"
+        img = pygame.image.load(path)
+        img = pygame.transform.scale_by(img, 0.01*self.radius)
+        img.set_colorkey((0, 0, 0))
+        img = pygame.transform.flip(img, False, True)
+        img = pygame.transform.laplacian(img)
+        #img = pygame.transform.rotate(img, -self.rotation)
+        img_rect = img.get_rect(center=self.position)
+        screen.blit(img, img_rect.topleft)
         return
 
     def update(self, dt):
@@ -18,6 +28,7 @@ class Asteroid(CircleShape):
     def split(self):
         self.kill()
         if self.radius <= ASTEROID_MIN_RADIUS:
+            Explosion(self.position.x, self.position.y, self.velocity, self.radius)
             return
         else:
             angle = random.uniform(20, 50)
