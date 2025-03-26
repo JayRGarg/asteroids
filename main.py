@@ -30,6 +30,11 @@ def main():
     Shot.containers = (updatable, drawable, shots)
     Explosion.containers = (updatable, drawable, explosions)
 
+    set_asteroids = set()
+    set_explosions = set()
+    remove_asteroids = []
+    remove_explosions = []
+
     pl = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     field = AsteroidField()
 
@@ -43,13 +48,32 @@ def main():
 
         # check for player collision
         for ast in asteroids:
+            set_asteroids.add(ast)
             if ast.collides_with(pl):
                 print("GAME OVER!")
                 exit()
             for s in shots:
                 if ast.collides_with(s):
-                    ast.split()
                     s.kill()
+                    exp = ast.split()
+                    if exp is not None:
+                        set_explosions.add(exp)
+
+        #IMMEDIATE GARBAGE COLLECTION
+        for a in set_asteroids:
+            if not a.alive():
+                remove_asteroids.append(a)
+        for e in set_explosions:
+            if not e.alive():
+                remove_explosions.append(e)
+        for a in remove_asteroids:
+            set_asteroids.remove(a)
+            del a
+        remove_asteroids.clear()
+        for e in remove_explosions:
+            set_explosions.remove(e)
+            del e
+        remove_explosions.clear()
 
         screen.fill("black")
         # draw all drawable objects
