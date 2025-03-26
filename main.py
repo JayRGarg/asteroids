@@ -40,9 +40,13 @@ def main():
 
         # check for player collision
         for ast in asteroids:
-            if ast.collides(pl):
+            if ast.collides_with(pl):
                 print("GAME OVER!")
                 exit()
+            for s in shots:
+                if ast.collides_with(s):
+                    ast.split()
+                    s.kill()
 
         screen.fill("black")
         # draw all drawable objects
