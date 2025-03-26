@@ -62,3 +62,6 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
+
+        self.position.x %= SCREEN_WIDTH
+        self.position.y %= SCREEN_HEIGHT
