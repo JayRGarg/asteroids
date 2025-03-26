@@ -22,11 +22,18 @@ class Explosion(CircleShape):
         #img = pygame.transform.rotate(img, -self.rotation)
         img_rect = img.get_rect(center=self.position)
         screen.blit(img, img_rect.topleft)
+        if (not (0+self.radius/2 < self.position.x < SCREEN_WIDTH-self.radius/2)) or (not (0+self.radius/2 < self.position.y < SCREEN_HEIGHT-self.radius/2)):
+            first_pos = img_rect.topleft
+            wrap_pos = pygame.Vector2(first_pos[0] % SCREEN_WIDTH, first_pos[1] % SCREEN_HEIGHT) #wraparound position
+            screen.blit(img, wrap_pos)
         return
 
     def update(self, dt):
-        self.position += self.velocity * dt
         self.time_since_explosion += dt
         if self.time_since_explosion > EXPLOSION_TIME:
             self.kill()
 
+        self.position += self.velocity * dt
+        # WRAP AROUND
+        self.position.x %= SCREEN_WIDTH
+        self.position.y %= SCREEN_HEIGHT

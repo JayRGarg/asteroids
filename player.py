@@ -21,13 +21,17 @@ class Player(CircleShape):
         #pygame.draw.polygon(screen, "white", self.triangle(), width=2)
         path = "./assets/rocket-blackbg.jpeg"
         img = pygame.image.load(path)
-        img = pygame.transform.scale_by(img, 0.1)
+        img = pygame.transform.scale_by(img, 0.005*PLAYER_RADIUS)
         img.set_colorkey((0, 0, 0))
         img = pygame.transform.flip(img, False, True)
         img = pygame.transform.laplacian(img)
         img = pygame.transform.rotate(img, -self.rotation)
         img_rect = img.get_rect(center=self.position)
         screen.blit(img, img_rect.topleft)
+        if (not (0+self.radius/2 < self.position.x < SCREEN_WIDTH-self.radius/2)) or (not (0+self.radius/2 < self.position.y < SCREEN_HEIGHT-self.radius/2)):
+            first_pos = img_rect.topleft
+            wrap_pos = pygame.Vector2(first_pos[0] % SCREEN_WIDTH, first_pos[1] % SCREEN_HEIGHT) #wraparound position
+            screen.blit(img, wrap_pos)
         return
 
     def rotate(self, dt):
@@ -63,5 +67,6 @@ class Player(CircleShape):
         if keys[pygame.K_SPACE]:
             self.shoot()
 
+        # WRAP AROUND
         self.position.x %= SCREEN_WIDTH
         self.position.y %= SCREEN_HEIGHT
