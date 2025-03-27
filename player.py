@@ -18,10 +18,9 @@ class Player(CircleShape):
         return [a, b, c]
 
     def draw(self, screen):
-        #pygame.draw.polygon(screen, "white", self.triangle(), width=2)
-        path = "./assets/rocket-blackbg.jpeg"
-        img = pygame.image.load(path)
-        img = pygame.transform.scale_by(img, 0.005*PLAYER_RADIUS)
+        path = "./assets/rocket-ts.png"
+        img = pygame.image.load(path).convert_alpha()
+        img = pygame.transform.scale_by(img, 0.001*PLAYER_RADIUS)
         img.set_colorkey((0, 0, 0))
         img = pygame.transform.flip(img, False, True)
         img = pygame.transform.laplacian(img)

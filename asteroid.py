@@ -10,13 +10,12 @@ class Asteroid(CircleShape):
         super().__init__(x, y, radius)
 
     def draw(self, screen):
-        #pygame.draw.circle(screen, "white", self.position, self.radius, width=2)
-        path = "./assets/asteroid-blackbg.jpeg"
-        img = pygame.image.load(path)
-        img = pygame.transform.scale_by(img, 0.01*self.radius)
+        path = "./assets/round-asteroid.png"
+        img = pygame.image.load(path).convert_alpha()
+        img = pygame.transform.scale_by(img, 0.008*self.radius)
         img.set_colorkey((0, 0, 0))
         img = pygame.transform.flip(img, False, True)
-        img = pygame.transform.laplacian(img)
+        #img = pygame.transform.laplacian(img)
         #img = pygame.transform.rotate(img, -self.rotation)
         img_rect = img.get_rect(center=self.position)
         screen.blit(img, img_rect.topleft)

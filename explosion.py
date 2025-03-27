@@ -11,11 +11,10 @@ class Explosion(CircleShape):
         self.time_since_explosion = 0
 
     def draw(self, screen):
-        #pygame.draw.circle(screen, "white", self.position, self.radius, width=2)
-        path = "./assets/red-explosion-blackbg-lowres.jpg"
-        img = pygame.image.load(path)
-        img = pygame.transform.scale_by(img, 0.005*ASTEROID_MIN_RADIUS)
-        img = pygame.transform.laplacian(img)
+        path = "./assets/explosion-cloud.png"
+        img = pygame.image.load(path).convert_alpha()
+        img = pygame.transform.scale_by(img, 0.05*ASTEROID_MIN_RADIUS)
+        #img = pygame.transform.laplacian(img)
         img.set_colorkey((0, 0, 0))
         img.set_alpha(255*(EXPLOSION_TIME-self.time_since_explosion))
         #img = pygame.transform.flip(img, False, True)

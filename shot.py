@@ -9,7 +9,6 @@ class Shot(CircleShape):
         self.time_since_shot = 0
 
     def draw(self, screen):
-        #pygame.draw.circle(screen, "white", self.position, self.radius, width=2)
         scale = 0.005
         pygame.draw.line(screen, (102, 255, 0), self.position+(self.velocity*self.radius*scale), self.position-(self.velocity*self.radius*scale), width=1)
         if (not (0+self.radius/2 < self.position.x < SCREEN_WIDTH-self.radius/2)) or (not (0+self.radius/2 < self.position.y < SCREEN_HEIGHT-self.radius/2)):
