@@ -10,7 +10,7 @@ class Asteroid(CircleShape):
         super().__init__(x, y, radius)
 
     def draw(self, screen):
-        path = "./assets/round-asteroid.png"
+        path = "./assets/images/round-asteroid.png"
         img = pygame.image.load(path).convert_alpha()
         img = pygame.transform.scale_by(img, 0.008*self.radius)
         img.set_colorkey((0, 0, 0))
@@ -44,4 +44,5 @@ class Asteroid(CircleShape):
             ast2 = Asteroid(self.position.x, self.position.y, new_radius)
             ast1.velocity = v1 * 1.2
             ast2.velocity = v2 * 1.2
+            ROCK_BREAK_SOUND.play(maxtime=400)
             return

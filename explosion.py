@@ -9,9 +9,10 @@ class Explosion(CircleShape):
         super().__init__(x, y, radius)
         self.velocity = velocity
         self.time_since_explosion = 0
+        EXPLOSION_SOUND.play(maxtime=200)
 
     def draw(self, screen):
-        path = "./assets/explosion-cloud.png"
+        path = "./assets/images/explosion-cloud.png"
         img = pygame.image.load(path).convert_alpha()
         img = pygame.transform.scale_by(img, 0.05*ASTEROID_MIN_RADIUS)
         #img = pygame.transform.laplacian(img)

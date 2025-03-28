@@ -18,7 +18,7 @@ class Player(CircleShape):
         return [a, b, c]
 
     def draw(self, screen):
-        path = "./assets/rocket-ts.png"
+        path = "./assets/images/rocket-ts.png"
         img = pygame.image.load(path).convert_alpha()
         img = pygame.transform.scale_by(img, 0.001*PLAYER_RADIUS)
         img.set_colorkey((0, 0, 0))
@@ -44,6 +44,7 @@ class Player(CircleShape):
 
     def shoot(self):
         if self.time_last_shot <= 0:
+            BLASTER_SOUND.play(maxtime=400)
             s = Shot(self.position.x, self.position.y)
             s.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
             self.time_last_shot = PLAYER_SHOOT_COOLDOWN
